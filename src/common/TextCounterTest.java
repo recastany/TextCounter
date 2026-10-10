@@ -3,6 +3,7 @@ package common;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class TextCounterTest {
 
@@ -16,10 +17,10 @@ public class TextCounterTest {
         //Act
         counter.count("Hello my friend!");
 
-                int actual = counter.getRows();
-                int expected = 1;
+        int actual = counter.getRows();
+        int expected = 1;
 
-                //Assert
+        //Assert
         assertEquals(expected, actual);
     }
 
@@ -56,6 +57,7 @@ public class TextCounterTest {
 
         int actualRows = counter.getRows();
         int actualletters = counter.getLetters();
+        assertFalse(counter.isRunning());
 
         //Assert
         assertEquals(2, actualRows);
@@ -63,7 +65,60 @@ public class TextCounterTest {
 
     }
 
+    @Test
+
+    public void testCountWords() {
+
+        //Arrange
+        TextCounter counter = new TextCounter();
+
+        //Act
+        counter.count("Hello my friend!");
+        counter.count("What`s up?");
+
+
+        //Assert
+        assertEquals(5, counter.getWords());
+
+
+    }
+
+    @Test
+
+    public void testLongestWords() {
+
+        //Arrange
+        TextCounter counter = new TextCounter();
+
+        //Act
+        counter.count("Hello my friend");
+        counter.count("What`s up?");
+
+
+        //Assert
+        assertEquals("friend", counter.getLongestWord());
+
+    }
+    @Test
+
+    public void testCountWordsWithMultipleSpace() {
+
+        //Arrange
+        TextCounter counter = new TextCounter();
+
+        //Act
+
+        counter.count("Hello     my     friend");
+        counter.count("What`s up?");
+
+
+        //Assert
+        assertEquals(2, counter.getRows());
+        assertEquals(33, counter.getLetters());
+        assertEquals(5, counter.getWords());
 
 
 
+
+    }
 }
